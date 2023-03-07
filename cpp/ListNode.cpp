@@ -14,4 +14,10 @@ ListNode::~ListNode() {
 
 }
 
+ListNode::ListNode(int v, ListNode * prev, ListNode * next) {
+    this -> val = v;
+    this -> previous = prev;
+    this -> next = next;
+}
+
 

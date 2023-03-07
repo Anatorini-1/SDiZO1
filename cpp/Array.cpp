@@ -12,6 +12,7 @@ bool Array::removeLast() {
     delete[] data;
     data = newData;
     size--;
+    return true;
 }
 
 

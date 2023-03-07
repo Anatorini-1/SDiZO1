@@ -11,20 +11,21 @@
 
 class LinkedList : DataStructure{
 public:
-    int get(int);
-    bool add(int);
+    int get(int) override;
+    bool add(int) override;
     bool addFirst(int);
-    bool addAt(int,int);
-    bool remove(int);
+    bool addAt(int index,int value);
+    bool addLast(int);
+    bool remove(int) override;
     bool removeFirst();
     bool removeLast();
-    int find(int);
-    void print();
+    int find(int) override;
+    void print() override;
     LinkedList();
     ~LinkedList();
 private:
     ListNode* head;
-
+    ListNode* tail;
 };
 
 

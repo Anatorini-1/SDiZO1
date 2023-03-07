@@ -8,7 +8,7 @@
 
 class ListNode {
 public:
-    ListNode(ListNode *pNode);
+    ListNode(int,ListNode*, ListNode* );
 
     ListNode* next;
     ListNode* previous;

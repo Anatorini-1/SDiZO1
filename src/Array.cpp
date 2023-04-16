@@ -4,6 +4,7 @@
 
 #include "Array.h"
 #include <iostream>
+#include <fstream>
 void Array::addFirst(int elem) {
     int* newData = new int[len + 1];
     newData[0] = elem;
@@ -120,5 +121,18 @@ void Array::fill(int size, int val) {
         data[i] = val;
     }
     len=size;
+
+}
+
+void Array::loadFromFile(std::string path) {
+    std::ifstream file;
+    file.open(path);
+    if(file.is_open()){
+        int value;
+        while(file >> value){
+            addLast(value);
+        }
+    }
+    file.close();
 
 }

@@ -4,7 +4,7 @@
 
 #ifndef SDIZO1_RBTREE_H
 #define SDIZO1_RBTREE_H
-
+#include <string>
 
 class RBTree {
 private:
@@ -41,7 +41,7 @@ public:
     ~RBTree();
     void print();
     void printTree(Node* node);
-
+    void loadFromFile(std::string path);
 
 };
 

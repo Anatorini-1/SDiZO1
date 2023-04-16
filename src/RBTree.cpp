@@ -2,6 +2,7 @@
 
 #include "RBTree.h"
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 void RBTree::add(int elem) {
     /*Step 1: Create a new Node, color it RED(true)*/
@@ -385,6 +386,18 @@ RBTree::Node *RBTree::findMax(RBTree::Node *n) {
         n = n->right;
     }
     return n;
+}
+
+void RBTree::loadFromFile(std::string path) {
+    std::ifstream file;
+    file.open(path);
+    if(file.is_open()){
+        int value;
+        while(file >> value){
+            add(value);
+        }
+    }
+    file.close();
 }
 
 

@@ -4,6 +4,7 @@
 
 #include "DoubleLinkedList.h"
 #include <iostream>
+#include <fstream>
 void DoubleLinkedList::addFirst(int elem) {
     if(head == 0){
         head = new Node;
@@ -146,4 +147,17 @@ void DoubleLinkedList::print() {
         temp = temp->next;
     }
     std::cout << ']' <<std::endl;
+}
+
+void DoubleLinkedList::loadFromFile(std::string path) {
+    std::ifstream file;
+    file.open(path);
+    if(file.is_open()){
+        int value;
+        while(file >> value){
+            addLast(value);
+        }
+    }
+    file.close();
+
 }

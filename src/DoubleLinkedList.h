@@ -4,7 +4,7 @@
 
 #ifndef SDIZO1_DOUBLELINKEDLIST_H
 #define SDIZO1_DOUBLELINKEDLIST_H
-
+#include <string>
 
 class DoubleLinkedList {
 private:
@@ -25,7 +25,7 @@ public:
     void delIndex(int index);
     void delValue(int value);
     int find(int val);
-
+    void loadFromFile(std::string path);
     DoubleLinkedList();
     ~DoubleLinkedList();
     void print();

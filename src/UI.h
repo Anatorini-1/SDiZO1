@@ -9,7 +9,7 @@
 class UI {
 private:
     enum structs {ARRAY, LIST, HEAP,RBTREE};
-    enum actions {INIT,ADD_FIRST,ADD_LAST,ADD_AT,DEL_FIRST,DEL_LAST,DEL_AT,FIND,PRINT};
+    enum actions {INIT,ADD_FIRST,ADD_LAST,ADD_AT,DEL_FIRST,DEL_LAST,DEL_AT,FIND,PRINT,LOAD};
 
     int structure;
     int action;

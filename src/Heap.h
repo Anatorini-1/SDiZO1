@@ -4,7 +4,7 @@
 
 #ifndef SDIZO1_HEAP_H
 #define SDIZO1_HEAP_H
-
+#include <string>
 /*We will assume a max-heap*/
 class Heap {
 private:
@@ -24,6 +24,7 @@ public:
     ~Heap();
     void print();
     void printTree();
+    void loadFromFile(std::string path);
 };
 
 

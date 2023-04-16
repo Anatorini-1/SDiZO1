@@ -3,9 +3,9 @@
 //
 
 #include "Heap.h"
-#include <math.h>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 void Heap::heapify(int index) {
     if(index == 0){
         return;
@@ -131,5 +131,18 @@ void Heap::printTree() {
         std::cout << std::endl;
     }
     std::cout << "------------------------"<<std::endl;
+
+}
+
+void Heap::loadFromFile(std::string path) {
+    std::ifstream file;
+    file.open(path);
+    if(file.is_open()){
+        int value;
+        while(file >> value){
+            add(value);
+        }
+    }
+    file.close();
 
 }

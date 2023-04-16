@@ -71,9 +71,10 @@ bool UI::chooseArrayAction() {
     cout << "6. Delete at Index" << endl;
     cout << "7. Find" << endl;
     cout << "8. Print" << endl;
-    cout << "9. Exit/Change Structure" << endl;
+    cout << "9. Load from file" << endl;
+    cout << "10. Exit/Change Structure" << endl;
     cin >> action;
-    if(action < 0 || action >= 9) {
+    if(action < 0 || action >= 10) {
         delete (Array*)structurePointer;
         return false;
     }
@@ -93,9 +94,10 @@ bool UI::chooseListAction() {
     cout << "6. Delete at Index" << endl;
     cout << "7. Find" << endl;
     cout << "8. Print" << endl;
-    cout << "9. Exit/Change Structure" << endl;
+    cout << "9. Load from file" << endl;
+    cout << "10. Exit/Change Structure" << endl;
     cin >> action;
-    if(action < 0 || action >= 9) {
+    if(action < 0 || action >= 10) {
         delete ((DoubleLinkedList*)structurePointer);
         return false;
     }
@@ -110,10 +112,11 @@ bool UI::chooseHeapAction() {
     cout << "2. Delete" << endl;
     cout << "3. Find" << endl;
     cout << "4. Print" << endl;
-    cout << "5. Exit/Change Structure" << endl;
+    cout << "5. Load from file" << endl;
+    cout << "6. Exit/Change Structure" << endl;
 
     cin >> action;
-    if(action < 0 || action >= 5) {
+    if(action < 0 || action >= 6) {
         delete ((Heap*)structurePointer);
         return false;
     }
@@ -133,6 +136,9 @@ bool UI::chooseHeapAction() {
         case 4:
             action = PRINT;
             break;
+        case 5:
+            action = LOAD;
+            break;
         default:
             return false;
     }
@@ -147,10 +153,11 @@ bool UI::chooseRBTreeAction() {
     cout << "2. Delete" << endl;
     cout << "3. Find" << endl;
     cout << "4. Print" << endl;
-    cout << "5. Exit/Change Structure" << endl;
+    cout << "5. Load from file" << endl;
+    cout << "6. Exit/Change Structure" << endl;
 
     cin >> action;
-    if(action < 0 || action >= 5) {
+    if(action < 0 || action >= 6) {
         delete ((RBTree*)structurePointer);
         return false;
     }
@@ -169,6 +176,9 @@ bool UI::chooseRBTreeAction() {
             break;
         case 4:
             action = PRINT;
+            break;
+        case 5:
+            action = LOAD;
             break;
         default:
             return false;
@@ -254,6 +264,12 @@ void UI::arrayAction() {
         case PRINT:
             ((Array*)structurePointer)->print();
             break;
+        case LOAD:
+            string fileName;
+            cout << "Enter file name: ";
+            cin >> fileName;
+            ((Array*)structurePointer)->loadFromFile(fileName);
+            break;
     }
 }
 
@@ -301,6 +317,12 @@ void UI::listAction() {
         case PRINT:
             ((DoubleLinkedList*)structurePointer)->print();
             break;
+        case LOAD:
+            string fileName;
+            cout << "Enter file name: ";
+            cin >> fileName;
+            ((DoubleLinkedList*)structurePointer)->loadFromFile(fileName);
+            break;
     }
 }
 
@@ -329,6 +351,12 @@ void UI::heapAction() {
         case PRINT:
             ((Heap *) structurePointer)->print();
             break;
+            case LOAD:
+            string fileName;
+            cout << "Enter file name: ";
+            cin >> fileName;
+            ((Heap *) structurePointer)->loadFromFile(fileName);
+            break;
     }
 }
 
@@ -356,6 +384,12 @@ void UI::rbTreeAction() {
             break;
         case PRINT:
             ((RBTree *) structurePointer)->print();
+            break;
+        case LOAD:
+            string fileName;
+            cout << "Enter file name: ";
+            cin >> fileName;
+            ((RBTree *) structurePointer)->loadFromFile(fileName);
             break;
 
 

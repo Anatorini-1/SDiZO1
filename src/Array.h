@@ -4,7 +4,7 @@
 
 #ifndef SDIZO1_ARRAY_H
 #define SDIZO1_ARRAY_H
-
+#include <string>
 class Array
 {
 private:
@@ -22,6 +22,7 @@ public:
     void fill(int size, int val);
     int find(int val);
     int operator[](int index);
+    void loadFromFile(std::string path);
     Array();
     ~Array();
     void print();

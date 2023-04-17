@@ -43,6 +43,9 @@ void Array::addAtIndex(int index, int elem) {
 }
 
 void Array::delFirst() {
+    if (len == 0) {
+        return;
+    }
     int* newData = new int[len - 1];
     for (int i = 0; i < len - 1; i++) {
         newData[i] = data[i + 1];
@@ -54,6 +57,9 @@ void Array::delFirst() {
 }
 
 void Array::delLast() {
+    if (len == 0) {
+        return;
+    }
     int* newData = new int[len - 1];
     for (int i = 0; i < len - 1; i++) {
         newData[i] = data[i];
@@ -65,6 +71,9 @@ void Array::delLast() {
 }
 
 void Array::delIndex(int index) {
+    if (len == 0 || index >= len) {
+        return;
+    }
     int* newData = new int[len - 1];
     for (int i = 0; i < index; i++) {
         newData[i] = data[i];

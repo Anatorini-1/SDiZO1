@@ -49,7 +49,9 @@ void RBTree::add(int elem) {
 void RBTree::del(int val) {
     /*Step 1: Regular BST deletion*/
     Node* toDel = find(val);
-    del(toDel);
+    if(toDel == nil) return;
+    if(toDel == root) del(toDel);
+    else remove(val);
 }
 void RBTree::del(Node *toDel) {
     bool orgColor = toDel->color;
@@ -105,10 +107,74 @@ void RBTree::del(Node *toDel) {
 
 }
 
+bool RBTree::remove(int value)
+{
+    // find element
+    Node* z = root;
+    while (z != nullptr)
+    {
+        if (z->value == value)
+            break;
+        else if (z->value > value)
+            z = z->left;
+        else
+            z = z->right;
+    }
+    if (z == nullptr)
+        return false;
+    // remove element
+    bool originalColor = z->color;
+    Node* x = nullptr; // x is successor of z
+    if (z->left == nil) // z has no left child
+    {
+        x = z->right;
+        transplant(z, z->right);
+    } else if (z->right == nil) // z has no right child
+    {
+        x = z->left;
+        transplant(z, z->left);
+    } else // z has two children
+    {
+        Node *y = successor(z);
+        originalColor = y->color;
+        x = y->right;
+        if (y->parent == z) // y is right child of z
+            x->parent = y;
+        else // y is not right child of z
+        {
+            transplant(y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(z, y);
+        y->left = z->left;
+        y->left->parent = y;
+        y->color = z->color;
+    }
+    //fix tree
+    if (originalColor == false)
+        removeFixUp(x);
+
+    delete (z); // delete element
+    return true;
+}
+
+void RBTree::transplant(Node* z, Node* x)
+{
+    if (z->parent == nullptr) // z is root
+        root = x;
+    else if (z == z->parent->left) // z is left child
+        z->parent->left = x;
+    else // z is right child
+        z->parent->right = x;
+    x->parent = z->parent;
+}
+
+
 
 RBTree::Node* RBTree::find(int val) {
     Node* currentNode = root;
-    while (currentNode != nil){
+    while (currentNode != nil && currentNode != 0){
         if (currentNode->value == val){
             return currentNode;
         } else if (currentNode->value > val){
@@ -148,7 +214,7 @@ void RBTree::printTree(Node* node){
         return;
     }
     printTree(node->left);
-    std::cout << '(' <<node->value << ')';
+    std::cout << '(' <<node->value << ')' << (node->color ? "RED" : "BLACK") << ' ' << node->parent->value << ' ' << node->left->value << ' ' << node->right->value << std::endl;
     printTree(node->right);
 
 }
@@ -359,14 +425,20 @@ RBTree::Node *RBTree::predecessor(RBTree::Node *n) {
     }
 }
 
-RBTree::Node *RBTree::successor(RBTree::Node *n) {
-    if(n->right != nil){
-        return findMin(n->right);
-    }
-    else {
-        auto y = n->parent;
-        while(y != nil && n == y->right){
-            n = y;
+RBTree::Node *RBTree::successor(RBTree::Node *x) {
+    {
+        Node *y = nullptr;
+        if (x->right != nil) // if right child is not TNULL
+        {
+            y = x->right;
+            while (y->left != nil)
+                y = y->left;
+            return y;
+        }
+        y = x->parent;
+        while (y != nullptr && x == y->right)
+        {
+            x = y;
             y = y->parent;
         }
         return y;
@@ -400,4 +472,78 @@ void RBTree::loadFromFile(std::string path) {
     file.close();
 }
 
+bool RBTree::findWrapper(int val) {
+    Node* n = find(val);
+    if(n == nil){
+        return false;
+    }
+    return true;
+}
 
+
+void RBTree::removeFixUp(Node *z)
+{
+    while (z != root && z->color == false)
+    {
+        if (z == z->parent->left) // z is left child
+        {
+            Node *x = z->parent->right; // x is brother of z
+            if (x->color == true) // if brother is red
+            {
+                x->color = false;
+                z->parent->color = true;
+                leftRotate(z->parent);
+                x = z->parent->right;
+            }
+            if (x->left->color == false && x->right->color == false) // if brother is black and both children are black
+            {
+                x->color = true;
+                z = z->parent;
+            } else // if brother is black and one child is red
+            {
+                if (x->right->color == false) // if brother is black and right child is black
+                {
+                    x->left->color = false;
+                    x->color = true;
+                    rightRotate(x);
+                    x = z->parent->right;
+                }
+                x->color = z->parent->color;
+                z->parent->color = false;
+                x->right->color = false;
+                leftRotate(z->parent);
+                z = root;
+            }
+        } else // z is right child
+        {
+            Node *x = z->parent->left; // x is brother of z
+            if (x->color == true) // if brother is red
+            {
+                x->color = false;
+                z->parent->color = true;
+                rightRotate(z->parent);
+                x = z->parent->left;
+            }
+            if (x->right->color == false && x->left->color == false) // if brother is black and both children are black
+            {
+                x->color = true;
+                z = z->parent;
+            } else // if brother is black and at least one child is red
+            {
+                if (x->left->color == false) // if brother is black and left child is black
+                {
+                    x->right->color = false;
+                    x->color = true;
+                    leftRotate(x);
+                    x = z->parent->left;
+                }
+                x->color = z->parent->color;
+                z->parent->color = false;
+                x->left->color = false;
+                rightRotate(z->parent);
+                z = root;
+            }
+        }
+    }
+    z->color = false;
+}
